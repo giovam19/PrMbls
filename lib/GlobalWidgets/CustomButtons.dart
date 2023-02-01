@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pr_mbls/Managers/AuthManager.dart';
 import 'package:pr_mbls/Pages/Register.dart';
 import '../GlobalWidgets/CustomTextFields.dart';
 
@@ -56,40 +58,38 @@ class CustomButtons {
     );
   }
 
-  void makeLogin(CustomTextFields fields, BuildContext context) {
+  Future<void> makeLogin(CustomTextFields fields, BuildContext context) async {
     String email = fields.emailText;
     String pass = fields.passText;
-    //TODO: login
-    Fluttertoast.showToast(
-      msg: "Email: $email, Pass: $pass",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-    );
 
-    fields.emailController = "";
+    User? user = await AuthManager.signInUsingEmailPassword(email: email, password: pass);
+
+    if (user != null) {
+      Fluttertoast.showToast(msg: "Successful, $email!", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+      fields.emailController = "";
+    } else {
+      Fluttertoast.showToast(msg: "Wrong", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    }
+
     fields.passController = "";
   }
 
   void goToSignUp(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "Sign Up!",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-    );
-
     Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
   }
 
-  void makeRegister(CustomTextFields fields, BuildContext context) {
+  Future<void> makeRegister(CustomTextFields fields, BuildContext context) async {
     String email = fields.emailText;
     String pass = fields.passText;
     String user = fields.userText;
 
-    Fluttertoast.showToast(
-      msg: "Register: $email, $pass, $user",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-    );
+    User? userData = await AuthManager.registerUsingEmailPassword(name: user, email: email, password: pass);
+
+    if (userData != null) {
+      Fluttertoast.showToast(msg: "Successful", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    } else {
+      Fluttertoast.showToast(msg: "Wrong", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    }
   }
 
   void returnPage(BuildContext context) {

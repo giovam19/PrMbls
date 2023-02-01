@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344617560684",
+    "project_id": "prmbls",
+    "storage_bucket": "prmbls.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344617560684:android:ef08fd955d9bee2debc649",
+        "android_client_info": {
+          "package_name": "com.example.pr_mbls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344617560684-19dlvbai2j97lms2s3otkeitbbunmt2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGHp50G6GnKEWv0xqwAMbn0H6qmWGC5BY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344617560684-19dlvbai2j97lms2s3otkeitbbunmt2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
