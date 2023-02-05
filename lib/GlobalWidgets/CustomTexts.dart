@@ -4,15 +4,30 @@ import 'CustomButtons.dart';
 class CustomTexts {
   CustomButtons buttons = CustomButtons();
 
+  final String Appname = "AppName";
+
   Widget BigAppName(double top) {
     return Padding(
       padding: EdgeInsets.fromLTRB(12, top, 12, 12),
       child: Text(
-        "AppName",
+        Appname,
         style: TextStyle(
           color: Colors.white,
           fontSize: 50,
           fontWeight: FontWeight.w300,
+        ),
+      ),
+    );
+  }
+
+  Widget MediumAppName(double top, double left) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(left, top, 12, 12),
+      child: Text(
+        Appname,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 25,
         ),
       ),
     );
@@ -30,4 +45,15 @@ class CustomTexts {
       ),
     );
   }
+
+  Widget postTexts(String text, Color color, double size) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+      child: Text(
+          text,
+          style: TextStyle(color: color, fontSize: size)
+      ),
+    );
+  }
+
 }
