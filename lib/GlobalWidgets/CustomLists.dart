@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:pr_mbls/GlobalWidgets/CustomTexts.dart';
 
+import '../Models/Media.dart';
+
 class CustomLists {
   CustomTexts texts = CustomTexts();
 
-  Widget mainList() {
+  Widget mainList(List<Media> mdata) {
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-      itemCount: 18,
+      itemCount: mdata.length,
       itemBuilder: (BuildContext context, int index) {
-        return newPost(index);
+        return newPost(index, mdata);
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(height: 20),
     );
   }
 
-  Widget newPost(int index) {
+  Widget newPost(int index, List<Media> data) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -44,14 +46,14 @@ class CustomLists {
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(12, 6, 6, 6),
-                  child: Image(image: Image.network("https://ideastest.org.uk/wp-content/uploads/2019/04/default-avatar-1.jpg").image, height: 50, width: 50),
+                  child: Image(image: data.elementAt(index).image.image, height: 50, width: 50),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    texts.postTexts("Song", Colors.black, 20),
-                    texts.postTexts("Artist", Colors.black, 14),
+                    texts.postTexts(data.elementAt(index).name, Colors.black, 20),
+                    texts.postTexts(data.elementAt(index).artist, Colors.black, 14),
                   ],
                 ),
               ],

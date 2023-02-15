@@ -39,6 +39,8 @@ dependencies:
   fluttertoast: ^8.1.2
   firebase_auth: ^4.2.5
   google_sign_in: ^5.4.4
+  http: ^0.13.5
+  spotify: ^0.8.0
 
 dev_dependencies:
   flutter_test:

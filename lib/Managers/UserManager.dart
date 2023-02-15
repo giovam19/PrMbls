@@ -6,5 +6,7 @@ class UserManager {
     return _instance;
   }
 
-  UserManager._internal();
+  UserManager._internal() {
+
+  }
 }

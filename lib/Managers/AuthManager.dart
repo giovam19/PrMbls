@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Models/FirebaseUser.dart';
 import '../Models/LoginUser.dart';
-
+//apikey = 4c3d7a45 OMDb
 class AuthManager {
 
   static Future<User?> registerUsingEmailPassword({required String name, required String email, required String password}) async {
@@ -13,6 +13,7 @@ class AuthManager {
 
       user = userCredential.user;
       await user?.updateDisplayName(name);
+      await user?.updatePhotoURL("");
       await user?.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
