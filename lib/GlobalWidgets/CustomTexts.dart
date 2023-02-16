@@ -48,10 +48,10 @@ class CustomTexts {
 
   Widget postTexts(String text, Color color, double size) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+      padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
       child: Text(
-          text,
-          style: TextStyle(color: color, fontSize: size)
+        text,
+        style: TextStyle(color: color, fontSize: size),
       ),
     );
   }

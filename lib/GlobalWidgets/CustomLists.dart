@@ -48,13 +48,18 @@ class CustomLists {
                   padding: EdgeInsets.fromLTRB(12, 6, 6, 6),
                   child: Image(image: data.elementAt(index).image.image, height: 50, width: 50),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    texts.postTexts(data.elementAt(index).name, Colors.black, 20),
-                    texts.postTexts(data.elementAt(index).artist, Colors.black, 14),
-                  ],
+                Flexible(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: texts.postTexts(data.elementAt(index).name, Colors.black, 20),
+                      ),
+                      texts.postTexts(data.elementAt(index).artist, Colors.black, 14),
+                    ],
+                  ),
                 ),
               ],
             ),
