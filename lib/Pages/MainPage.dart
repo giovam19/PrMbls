@@ -6,23 +6,23 @@ import 'package:pr_mbls/GlobalWidgets/CustomButtons.dart';
 import 'package:pr_mbls/GlobalWidgets/CustomLists.dart';
 import 'package:http/http.dart' as http;
 import 'package:pr_mbls/Managers/APIManager.dart';
+import 'package:pr_mbls/Managers/DataManager.dart';
 import 'package:pr_mbls/Models/Media.dart';
+import 'package:pr_mbls/Models/Post.dart';
 import '../GlobalWidgets/CustomTexts.dart';
 
 class MainPage extends StatelessWidget {
   CustomTexts texts = CustomTexts();
   CustomLists lists = CustomLists();
   CustomButtons buttons = CustomButtons();
-  APIManager api = APIManager();
+  DataManager data = DataManager();
 
   @override
   Widget build(BuildContext context) {
-    api.onChangeType("Movie");
-
     return Scaffold(
       body: FutureBuilder(
-        future: api.search("harry potter"),
-        builder: (BuildContext context, AsyncSnapshot<List<Media>> snapshot) {
+        future: data.getPosts(),
+        builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return body(context, snapshot.data!);
           } else {
@@ -33,7 +33,7 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  Widget body(BuildContext context, List<Media> data) {
+  Widget body(BuildContext context, List<Post> data) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

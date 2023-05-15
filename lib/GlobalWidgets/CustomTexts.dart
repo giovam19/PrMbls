@@ -56,4 +56,23 @@ class CustomTexts {
     );
   }
 
+  Widget nameMedia(String text) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+      child: Text(
+        text,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+      ),
+    );
+  }
+
+  Widget extraMedia(String text) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 15),
+      ),
+    );
+  }
 }

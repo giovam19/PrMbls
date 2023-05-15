@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:pr_mbls/GlobalWidgets/CustomTexts.dart';
+import 'package:pr_mbls/Models/Post.dart';
+import 'package:pr_mbls/Pages/MediaInfo.dart';
 
 import '../Models/Media.dart';
 
 class CustomLists {
   CustomTexts texts = CustomTexts();
 
-  Widget mainList(List<Media> mdata) {
+  Widget mainList(List<Post> mdata) {
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
       itemCount: mdata.length,
       itemBuilder: (BuildContext context, int index) {
-        return newPost(index, mdata);
+        return newPost(context, index, mdata,);
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(height: 20),
     );
   }
 
-  Widget newPost(int index, List<Media> data) {
+  Widget newPost(BuildContext context, int index, List<Post> data) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -32,12 +34,12 @@ class CustomLists {
                   padding: EdgeInsets.fromLTRB(12, 6, 6, 6),
                   child: Image(image: Image.network("https://ideastest.org.uk/wp-content/uploads/2019/04/default-avatar-1.jpg").image, height: 40, width: 40),
                 ),
-                texts.postTexts("Profile ${index}", Colors.black, 14),
+                texts.postTexts(data.elementAt(index).username, Colors.black, 14),
               ],
             ),
           ),
           Image(
-            image: Image.network("https://www.chanchao.com.tw/images/default.jpg").image
+            image: Image.asset("assets/img/defaultPost.jpg").image
           ),
           Container(
             color: Colors.white70,
@@ -46,19 +48,27 @@ class CustomLists {
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(12, 6, 6, 6),
-                  child: Image(image: data.elementAt(index).image.image, height: 50, width: 50),
+                  child: Image( image: data.elementAt(index).imagemedia == "" ?
+                      Image.network("https://ideastest.org.uk/wp-content/uploads/2019/04/default-avatar-1.jpg").image :
+                      Image.network(data.elementAt(index).imagemedia).image,
+                    height: 40,
+                    width: 40,
+                  ),
                 ),
                 Flexible(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: texts.postTexts(data.elementAt(index).name, Colors.black, 20),
-                      ),
-                      texts.postTexts(data.elementAt(index).artist, Colors.black, 14),
-                    ],
+                  child: GestureDetector(
+                    onTap: () => gotoMediaInfo(context, data.elementAt(index)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: texts.postTexts(data.elementAt(index).titlemedia, Colors.black, 20),
+                        ),
+                        texts.postTexts(data.elementAt(index).artistmedia, Colors.black, 14),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -67,5 +77,9 @@ class CustomLists {
         ],
       ),
     );
+  }
+
+  void gotoMediaInfo(BuildContext context, Post post) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MediaInfo(post: post)));
   }
 }

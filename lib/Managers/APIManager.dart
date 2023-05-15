@@ -78,7 +78,7 @@ class APIManager {
 
   Future<List<Media>> _searchMusic(String search) async {
     var result = await spotify.search.get(search).first();
-    result.removeAt(4); //eliminar la 4 por bu del sdk
+    result.removeAt(4); //eliminar la 4 por bug del sdk
 
     List<Media> medias = [];
     for (var pages in result) {
