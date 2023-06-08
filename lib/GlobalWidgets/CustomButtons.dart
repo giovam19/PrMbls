@@ -18,12 +18,12 @@ class CustomButtons {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.grey,
+          color:Color(0xD1B4CDED),
         ),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 70),
         child: const Text(
           "Login",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Color(0xFF0D1821), fontSize: 20),
         ),
       )
     );
