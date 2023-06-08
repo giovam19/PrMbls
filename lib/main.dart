@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
         dividerColor: Colors.black12,
       ),
-      home: MainPage()
+      home: Login()
     );
   }
 }
