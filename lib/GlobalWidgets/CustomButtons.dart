@@ -1,10 +1,13 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pr_mbls/Managers/AuthManager.dart';
+import 'package:pr_mbls/Pages/CameraPage.dart';
 import 'package:pr_mbls/Pages/Register.dart';
 import '../GlobalWidgets/CustomTextFields.dart';
 import '../Pages/MainPage.dart';
+import '../Pages/NewPublish.dart';
 
 class CustomButtons {
 
@@ -108,6 +111,7 @@ class CustomButtons {
     fields.passController = "";
   }
 
+
   Future<void> makeRegister(CustomTextFields fields, BuildContext context) async {
     String email = fields.emailText;
     String pass = fields.passText;
@@ -131,8 +135,11 @@ class CustomButtons {
     Fluttertoast.showToast(msg: "Profile", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
   }
 
-  void goToNewPublish(BuildContext context) {
+  Future<void> goToNewPublish(BuildContext context) async {
     Fluttertoast.showToast(msg: "New Publish", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    await availableCameras()
+        .then((value) => Navigator.push(context, MaterialPageRoute(builder: (_) => CameraPage(cameras: value))));
+
   }
 
   void goToSettings(BuildContext context) {
