@@ -21,17 +21,38 @@ class _PreviewPageState extends State<PreviewPage> {
   String searchQuery = '';
   bool showSongDescription = false;
   Media? media;
+  String? selectedOption;
+
 
   void _performSearch(String query) async {
-    APIManager().onChangeType("Music");
+    APIManager().onChangeType(selectedOption!);
     List<Media> searchResults = await APIManager().search(query);
     if (searchResults.isNotEmpty) {
       setState(() {
         media = searchResults.first;
         showSongDescription = true;
       });
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('No Results'),
+            content: const Text('No search results found.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,18 +83,29 @@ class _PreviewPageState extends State<PreviewPage> {
   Widget musicSearch() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-      child: TextField(
-        style: const TextStyle(color: Colors.black),
+      child: DropdownButtonFormField<String>(
+        value: selectedOption,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          hintText: "Music",
-          hintStyle: const TextStyle(color: Colors.black45),
-          filled: true,
-          fillColor: Colors.white,
-          suffixIcon: const Icon(Icons.arrow_drop_down), // Replace with an arrow icon
         ),
+        onChanged: (value) {
+          setState(() {
+            selectedOption = value;
+          });
+        },
+        items: const [
+          DropdownMenuItem(
+            value: 'Music',
+            child: Text('Music'),
+          ),
+          DropdownMenuItem(
+            value: 'Movie',
+            child: Text('Movie'),
+          ),
+        ],
+        hint: const Text('Select a field'), // Add a hint text
       ),
     );
   }
@@ -96,18 +128,37 @@ class _PreviewPageState extends State<PreviewPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          hintText: "Song",
+          hintText: "Search",
           hintStyle: const TextStyle(color: Colors.black45),
           filled: true,
           fillColor: Colors.white,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               _performSearch(searchQuery);
             },
           ),
         ),
       ),
+    );
+  }
+
+  Widget search() {
+    return TextButton(
+        onPressed: () {
+          _performSearch(searchQuery);
+          },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.grey,
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          child: const Text(
+            "Search",
+            style: TextStyle(color: Colors.black, fontSize: 12),
+          ),
+        )
     );
   }
 
@@ -155,23 +206,6 @@ class _PreviewPageState extends State<PreviewPage> {
     );
   }
 
-
-  Widget search() {
-    return TextButton(
-        onPressed: () {  },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.grey,
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          child: const Text(
-            "Search",
-            style: TextStyle(color: Colors.black, fontSize: 12),
-          ),
-        )
-    );
-  }
 
   Widget postVideo() {
     return TextButton(
