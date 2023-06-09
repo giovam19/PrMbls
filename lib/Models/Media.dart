@@ -14,7 +14,7 @@ class Media {
     image = Image.network(data);
   }
 
-  void printt() {
+  void printMedia() {
     print('Media:\n'
         'name: $name\n'
         'artists: $artist\n'
