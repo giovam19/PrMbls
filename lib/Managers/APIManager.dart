@@ -68,8 +68,7 @@ class APIManager {
 
       var param = type == "Movie" ? aux["Director"] : aux["Writer"];
 
-      Media media = Media(aux["Title"], param, aux["Year"], aux["Genre"], type);
-      media.buildImage(aux["Poster"]);
+      Media media = Media(aux["Title"], param, aux["Year"], aux["Genre"], type, aux["Poster"] );
       medias.add(media);
     }
 
@@ -85,8 +84,7 @@ class APIManager {
       for (var item in pages.items!) {
         if (item is TrackSimple) {
           var track = await spotify.tracks.get(item.id!);
-          Media media = Media(track.name!, track.artists!.first.name!, track.album!.releaseDate!, track.album!.name!, type);
-          media.buildImage(track.album!.images!.first.url!);
+          Media media = Media(track.name!, track.artists!.first.name!, track.album!.releaseDate!, track.album!.name!, type, track.album!.images!.first.url!);
           medias.add(media);
         }
       }

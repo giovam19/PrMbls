@@ -227,35 +227,36 @@ class _PreviewPageState extends State<PreviewPage> {
             height: 100.0,
             // color: Colors.blue, // Uncomment this line if you want a background color for the container
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: media.image.image, // Extract ImageProvider from Image widget
-                fit: BoxFit.cover,
-              ),
+            child: Image(
+                image: Image.network(media.image).image,
+                height: 100,
+                width: 100
             ),
           ),
           const SizedBox(width: 16.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const MarqueeText(
-                text: TextSpan(
-                  text: 'This is long long long wgfdfsdfsdfsdfsdfsdfsdfsdfsdfsd text...',
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const MarqueeText(
+                  text: TextSpan(
+                    text: 'This is long long long wgfdfsdfsdfsdfsdfsdfsdfsdfsdfsd text...',
+                  ),
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                  speed: 30,
                 ),
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
+                const SizedBox(height: 8.0),
+                Text(
+                  media.name,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                  ),
                 ),
-                speed: 30,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                media.name,
-                style: const TextStyle(
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

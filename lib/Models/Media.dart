@@ -6,13 +6,9 @@ class Media {
   String year;
   String extraInfo;
   String type;
-  late Image image;
+  late String image;
 
-  Media(this.name, this.artist, this.year, this.extraInfo, this.type);
-
-  void buildImage(String data) {
-    image = Image.network(data);
-  }
+  Media(this.name, this.artist, this.year, this.extraInfo, this.type, this.image);
 
   void printMedia() {
     print('Media:\n'
