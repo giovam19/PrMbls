@@ -266,6 +266,7 @@ class _PreviewPageState extends State<PreviewPage> {
   Widget postVideo() {
     return TextButton(
       onPressed: () {
+        //TODO: LLAMAR A LA FUNCION QUE SUBE LA FOTO Y TE DEVUELVE LA ULR O ALGO ASI
         Post post = Post(
           LoginUser.instance.username!, // Replace with the actual username
           LoginUser.instance.onlineImage!, // Replace with the actual user profile
