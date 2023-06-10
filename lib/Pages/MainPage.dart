@@ -44,6 +44,8 @@ class MainPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               texts.MediumAppName(50, 24),
+              Spacer(),
+              buttons.profileButton(context),
             ],
           ),
           Expanded(
@@ -52,13 +54,13 @@ class MainPage extends StatelessWidget {
           ),
           Spacer(),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buttons.profileButton(context),
-              Spacer(),
+              //buttons.profileButton(context),
+              //Spacer(),
               buttons.addPublishButton(context),
-              Spacer(),
-              buttons.settingsButton(context),
+              //Spacer(),
+              //buttons.settingsButton(context),
             ],
           ),
         ]

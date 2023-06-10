@@ -274,7 +274,7 @@ class _PreviewPageState extends State<PreviewPage> {
           widget.picture.path, // Assuming the video path is used as the post media
           media?.name ?? '', // Assuming media is the current selected media object
           media?.artist ?? '', // Assuming media is the current selected media object
-          media?.image.toString() ?? '', // Assuming media is the current selected media object
+          media?.image ?? '', // Assuming media is the current selected media object
           DateTime.now(),
         );
         DataManager().addPost(post);

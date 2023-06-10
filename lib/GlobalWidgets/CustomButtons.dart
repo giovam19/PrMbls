@@ -91,7 +91,7 @@ class CustomButtons {
 
   Widget profileButton(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(6),
+      padding: EdgeInsets.fromLTRB(6, 50, 6, 0),
       child: TextButton(
         onPressed: () => goToProfile(context),
         child: Icon(Icons.person, size: 40, color: Color(Constants.lighgray)),
@@ -104,7 +104,7 @@ class CustomButtons {
       padding: EdgeInsets.all(6),
       child: TextButton(
         onPressed: () => goToNewPublish(context),
-        child: Icon(Icons.add_circle_outline, size: 40, color: Color(Constants.lighgray)),
+        child: Icon(Icons.add_circle_outline, size: 50, color: Color(Constants.lighgray)),
       ),
     );
   }

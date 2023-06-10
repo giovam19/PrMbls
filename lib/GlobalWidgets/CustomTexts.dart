@@ -23,7 +23,7 @@ class CustomTexts {
 
   Widget MediumAppName(double top, double left) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(left, top, 12, 12),
+      padding: EdgeInsets.fromLTRB(left, top, 12, 0),
       child: Text(
         Appname,
         style: TextStyle(
@@ -73,6 +73,16 @@ class CustomTexts {
       child: Text(
         text,
         style: TextStyle(fontSize: 15, color: Color(Constants.lighgray)),
+      ),
+    );
+  }
+
+  Widget userName(String text) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 20, color: Color(Constants.lighgray)),
       ),
     );
   }

@@ -68,7 +68,7 @@ class APIManager {
 
       var param = type == "Movie" ? aux["Director"] : aux["Writer"];
 
-      Media media = Media(aux["Title"], param, aux["Year"], aux["Genre"], type, aux["Poster"] );
+      Media media = Media(aux["Title"], param, aux["Year"], aux["Genre"], type, aux["Poster"]);
       medias.add(media);
     }
 
