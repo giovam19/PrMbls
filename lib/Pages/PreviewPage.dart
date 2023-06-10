@@ -88,66 +88,38 @@ class _PreviewPageState extends State<PreviewPage> {
   Widget musicSearch() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Color(Constants.lighgray), // Add your desired background color here
         ),
-        onChanged: (value) {
-          setState(() {
-            APIManager().onChangeType(value!);
-          });
-        },
-        items: const [
-          DropdownMenuItem(
-            value: 'Music',
-            child: Text('Music'),
+        child: DropdownButtonFormField<String>(
+          decoration: const InputDecoration(
+            border: InputBorder.none, // Remove the border
+            contentPadding: EdgeInsets.symmetric(horizontal: 16), // Adjust the content padding
           ),
-          DropdownMenuItem(
-            value: 'Movie',
-            child: Text('Movie'),
-          ),
-        ],
-        hint: const Text('Select a field'), // Add a hint text
-      ),
-    );
-  }
-
-/*
-  Widget songSearch() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-      child: TextField(
-        style: const TextStyle(color: Colors.black),
-        onChanged: (value) {
-          setState(() {
-            searchQuery = value;
-          });
-        },
-        onSubmitted: (value) {
-          _performSearch(value);
-        },
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          hintText: "Search",
-          hintStyle: const TextStyle(color: Colors.black45),
-          filled: true,
-          fillColor: Colors.white,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              _performSearch(searchQuery);
-            },
-          ),
+          onChanged: (value) {
+            setState(() {
+              APIManager().onChangeType(value!);
+            });
+          },
+          items: const [
+            DropdownMenuItem(
+              value: 'Music',
+              child: Text('Music'),
+            ),
+            DropdownMenuItem(
+              value: 'Movie',
+              child: Text('Movie'),
+            ),
+          ],
+          hint: const Text('Select a field'), // Add a hint text
         ),
       ),
     );
   }
 
- */
+
 
   Widget songSearch() {
     return Padding(
@@ -170,7 +142,7 @@ class _PreviewPageState extends State<PreviewPage> {
             hintText: "Search",
             hintStyle: const TextStyle(color: Colors.black45),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Color(Constants.lighgray), // Add your desired background color here
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
@@ -236,28 +208,29 @@ class _PreviewPageState extends State<PreviewPage> {
           ),
           const SizedBox(width: 16.0),
           SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const MarqueeText(
-                  text: TextSpan(
-                    text: 'This is long long long wgfdfsdfsdfsdfsdfsdfsdfsdfsdfsd text...',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    media.artist,
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis, // Add this line
+                    maxLines: 1, // Add this line
                   ),
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
+                  const SizedBox(height: 8.0),
+                  Text(
+                    media.name,
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                    ),
+                    overflow: TextOverflow.ellipsis, // Add this line
+                    maxLines: 1, // Add this line
                   ),
-                  speed: 30,
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  media.name,
-                  style: const TextStyle(
-                    fontSize: 14.0,
-                  ),
-                ),
-              ],
-            ),
+                ],
+              ),
           ),
         ],
       ),
@@ -286,7 +259,7 @@ class _PreviewPageState extends State<PreviewPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.grey,
+          color: Color(Constants.lightblue), // Add your desired background color here
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 45),
         child: const Text(
