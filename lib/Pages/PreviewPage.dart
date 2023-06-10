@@ -161,7 +161,7 @@ class _PreviewPageState extends State<PreviewPage> {
             });
           },
           onSubmitted: (value) {
-            _performSearch(value);
+            APIManager().search(value);
           },
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -174,7 +174,7 @@ class _PreviewPageState extends State<PreviewPage> {
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                _performSearch(searchQuery);
+                APIManager().search(searchQuery);
               },
             ),
           ),
