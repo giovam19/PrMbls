@@ -3,6 +3,7 @@ import 'package:pr_mbls/GlobalWidgets/CustomTexts.dart';
 import 'package:pr_mbls/Managers/APIManager.dart';
 
 import '../Models/Post.dart';
+import '../Styles/Constants.dart';
 
 class MediaInfo extends StatelessWidget {
   final Post post;
@@ -14,6 +15,7 @@ class MediaInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(Constants.mediumblue),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

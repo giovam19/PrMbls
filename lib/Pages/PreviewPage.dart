@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
+import 'package:pr_mbls/Styles/Constants.dart';
 import 'dart:io';
 
 import '../Models/Media.dart';
@@ -57,6 +58,7 @@ class _PreviewPageState extends State<PreviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(Constants.mediumblue),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(

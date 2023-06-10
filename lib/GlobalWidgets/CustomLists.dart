@@ -4,6 +4,7 @@ import 'package:pr_mbls/Models/Post.dart';
 import 'package:pr_mbls/Pages/MediaInfo.dart';
 
 import '../Models/Media.dart';
+import '../Styles/Constants.dart';
 
 class CustomLists {
   CustomTexts texts = CustomTexts();
@@ -26,7 +27,7 @@ class CustomLists {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            color: Colors.white,
+            color: Color(Constants.lightblue),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -42,7 +43,7 @@ class CustomLists {
             image: Image.asset("assets/img/defaultPost.jpg").image
           ),
           Container(
-            color: Colors.white70,
+            color: Color(Constants.lighgray),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -64,9 +65,9 @@ class CustomLists {
                       children: [
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: texts.postTexts(data.elementAt(index).titlemedia, Colors.black, 20),
+                          child: texts.postTexts(data.elementAt(index).titlemedia, Color(Constants.darkblue), 20),
                         ),
-                        texts.postTexts(data.elementAt(index).artistmedia, Colors.black, 14),
+                        texts.postTexts(data.elementAt(index).artistmedia, Color(Constants.darkblue), 14),
                       ],
                     ),
                   ),

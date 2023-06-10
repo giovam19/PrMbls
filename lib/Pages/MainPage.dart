@@ -10,6 +10,7 @@ import 'package:pr_mbls/Managers/DataManager.dart';
 import 'package:pr_mbls/Models/Media.dart';
 import 'package:pr_mbls/Models/Post.dart';
 import '../GlobalWidgets/CustomTexts.dart';
+import '../Styles/Constants.dart';
 
 class MainPage extends StatelessWidget {
   CustomTexts texts = CustomTexts();
@@ -20,13 +21,14 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(Constants.mediumblue),
       body: FutureBuilder(
         future: data.getPosts(),
         builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return body(context, snapshot.data!);
           } else {
-            return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()]));
+            return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator(color: Color(Constants.lighgray))]));
           }
         },
       )

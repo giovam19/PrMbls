@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Styles/Constants.dart';
 
 class CustomTextFields {
   late TextEditingController _emailController;
@@ -15,6 +16,7 @@ class CustomTextFields {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
       child: TextField(
+        keyboardType: TextInputType.emailAddress,
         controller: _emailController,
         style: TextStyle(color: Colors.black),
         decoration: InputDecoration(
@@ -24,7 +26,7 @@ class CustomTextFields {
           hintText: "Email",
           hintStyle: TextStyle(color: Colors.black45),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Color(Constants.lighgray),
         ),
       ),
     );
@@ -44,7 +46,7 @@ class CustomTextFields {
           hintText: "Password",
           hintStyle: TextStyle(color: Colors.black45),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Color(Constants.lighgray),
         ),
       ),
     );
@@ -63,7 +65,7 @@ class CustomTextFields {
           hintText: "Username",
           hintStyle: TextStyle(color: Colors.black45),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Color(Constants.lighgray),
         ),
       )
     );

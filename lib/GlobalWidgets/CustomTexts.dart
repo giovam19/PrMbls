@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import '../Styles/Constants.dart';
 import 'CustomButtons.dart';
 
 class CustomTexts {
   CustomButtons buttons = CustomButtons();
 
-  final String Appname = "AppName";
+  final String Appname = "RealVibes";
 
   Widget BigAppName(double top) {
     return Padding(
@@ -12,7 +13,7 @@ class CustomTexts {
       child: Text(
         Appname,
         style: TextStyle(
-          color: Colors.white,
+          color: Color(Constants.lighgray),
           fontSize: 50,
           fontWeight: FontWeight.w300,
         ),
@@ -26,7 +27,7 @@ class CustomTexts {
       child: Text(
         Appname,
         style: TextStyle(
-          color: Colors.white,
+          color: Color(Constants.lighgray),
           fontSize: 25,
         ),
       ),
@@ -39,7 +40,7 @@ class CustomTexts {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("Don't have an account?", style: TextStyle(color: Colors.white)),
+          Text("Don't have an account?", style: TextStyle(color: Color(Constants.lighgray))),
           buttons.signUpButton(context),
         ],
       ),
@@ -61,7 +62,7 @@ class CustomTexts {
       padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
       child: Text(
         text,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Color(Constants.lighgray)),
       ),
     );
   }
@@ -71,7 +72,7 @@ class CustomTexts {
       padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
       child: Text(
         text,
-        style: TextStyle(fontSize: 15),
+        style: TextStyle(fontSize: 15, color: Color(Constants.lighgray)),
       ),
     );
   }

@@ -1,6 +1,14 @@
-class LoginUser {
-  final String? email;
-  final String? password;
+import 'dart:io';
 
-  LoginUser({this.email, this.password});
+class LoginUser {
+  String? username;
+  String? email;
+  String? password;
+  File? image;
+  String? onlineImage;
+
+  LoginUser._privateConstructor();
+  static final LoginUser _instance = LoginUser._privateConstructor();
+  static LoginUser get instance => _instance;
+
 }

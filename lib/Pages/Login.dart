@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pr_mbls/Models/LoginUser.dart';
+import 'package:pr_mbls/Styles/Constants.dart';
 import '../GlobalWidgets/CustomTextFields.dart';
 import '../GlobalWidgets/CustomTexts.dart';
 import '../GlobalWidgets/CustomButtons.dart';
@@ -12,6 +14,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(Constants.mediumblue),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

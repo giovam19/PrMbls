@@ -5,6 +5,9 @@ import 'package:pr_mbls/Pages/MediaInfo.dart';
 import 'Pages/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Pages/Register.dart';
+import 'Styles/Constants.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,16 +23,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AppName',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-        primaryColor: Colors.black,
-        brightness: Brightness.dark,
-        backgroundColor: Colors.black,
-        dividerColor: Colors.black12,
+      title: "RealVibes",
+      home: Scaffold(
+        body: Login(),
       ),
-      home: Login()
+      debugShowCheckedModeBanner: false,
     );
   }
 }
