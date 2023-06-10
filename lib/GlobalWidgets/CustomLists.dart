@@ -31,17 +31,25 @@ class CustomLists {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                data.elementAt(index).userprofile != "" ?
+                Padding(
+                  padding: EdgeInsets.fromLTRB(12, 6, 6, 6),
+                  child: Image(image: Image.network(data.elementAt(index).userprofile).image, height: 40, width: 40),
+                ) :
                 Padding(
                   padding: EdgeInsets.fromLTRB(12, 6, 6, 6),
                   child: Image(image: Image.network("https://ideastest.org.uk/wp-content/uploads/2019/04/default-avatar-1.jpg").image, height: 40, width: 40),
                 ),
+
                 texts.postTexts(data.elementAt(index).username, Colors.black, 14),
               ],
             ),
           ),
-          Image(
-            image: Image.asset("assets/img/defaultPost.jpg").image
-          ),
+
+          data.elementAt(index).postmedia != "" ?
+          Image(image: Image.network(data.elementAt(index).postmedia).image, height: 500,) :
+          Image(image: Image.asset("assets/img/defaultPost.jpg").image),
+
           Container(
             color: Color(Constants.lighgray),
             child: Row(

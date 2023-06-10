@@ -5,6 +5,7 @@ import 'package:marquee_text/marquee_text.dart';
 import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
 import 'package:pr_mbls/Models/LoginUser.dart';
+import 'package:pr_mbls/Pages/MainPage.dart';
 import 'package:pr_mbls/Styles/Constants.dart';
 import 'dart:io';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -278,6 +279,9 @@ class _PreviewPageState extends State<PreviewPage> {
           DateTime.now(),
         );
         DataManager().addPost(post);
+        final nav = Navigator.of(context);
+        nav.pop();
+        nav.pop();
       },
       child: Container(
         decoration: BoxDecoration(

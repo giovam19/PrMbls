@@ -22,13 +22,26 @@ class DataManager {
   }
 
   Future<void> addPost(Post post) async {
-    await db.collection("Posts").add(post.mapPost());
+    addPostPhoto(post);
   }
   
   Future<void> addProfilePhoto(String filename, File file) async {
     String path = "profile_photos/$filename";
     var snapshot = await storage.ref().child(path).putFile(file).then((p0) async => {
       LoginUser.instance.onlineImage = await p0.ref.getDownloadURL()
+    });
+  }
+
+  Future<void> addPostPhoto(Post post) async {
+    String filename = post.username+post.timestamp.toString();
+    File file = File(post.postmedia);
+    String url;
+    String path = "post_photos/$filename";
+
+    var snapshot = await storage.ref().child(path).putFile(file).then((p0) async => {
+      url = await p0.ref.getDownloadURL(),
+      post.postmedia = url,
+      await db.collection("Posts").add(post.mapPost())
     });
   }
 
