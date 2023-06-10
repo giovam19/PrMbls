@@ -1,7 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
+import 'package:marquee_text/marquee_text.dart';
 import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
+import 'package:pr_mbls/Models/LoginUser.dart';
 import 'package:pr_mbls/Styles/Constants.dart';
 import 'dart:io';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -161,7 +164,7 @@ class _PreviewPageState extends State<PreviewPage> {
             });
           },
           onSubmitted: (value) {
-            APIManager().search(value);
+            _performSearch(value);
           },
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -174,7 +177,7 @@ class _PreviewPageState extends State<PreviewPage> {
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                APIManager().search(searchQuery);
+                _performSearch(searchQuery);
               },
             ),
           ),
@@ -191,13 +194,12 @@ class _PreviewPageState extends State<PreviewPage> {
         },
         onSuggestionSelected: (suggestion) {
           // Handle the selection of a suggestion from the dropdown
-          APIManager().search(suggestion.name);
+          searchQuery = suggestion.name;
+          _performSearch(searchQuery);
         },
       ),
     );
   }
-
-
 
 
   Widget search() {
@@ -222,19 +224,17 @@ class _PreviewPageState extends State<PreviewPage> {
   Widget songDescription(Media media) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
-      child: Row(
+        child: Row(
         children: <Widget>[
           Container(
             width: 100.0,
             height: 100.0,
-            color: Colors.blue,
+            // color: Colors.blue, // Uncomment this line if you want a background color for the container
             alignment: Alignment.center,
-            child: const Text(
-              'Photo',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: media.image.image, // Extract ImageProvider from Image widget
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -242,12 +242,15 @@ class _PreviewPageState extends State<PreviewPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                media.artist,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+              const MarqueeText(
+                text: TextSpan(
+                  text: 'This is long long long wgfdfsdfsdfsdfsdfsdfsdfsdfsdfsd text...',
                 ),
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                ),
+                speed: 30,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -268,8 +271,8 @@ class _PreviewPageState extends State<PreviewPage> {
     return TextButton(
       onPressed: () {
         Post post = Post(
-          'username', // Replace with the actual username
-          'userprofile', // Replace with the actual user profile
+          LoginUser.instance.username!, // Replace with the actual username
+          LoginUser.instance.onlineImage!, // Replace with the actual user profile
           widget.picture.path, // Assuming the video path is used as the post media
           media?.name ?? '', // Assuming media is the current selected media object
           media?.artist ?? '', // Assuming media is the current selected media object
