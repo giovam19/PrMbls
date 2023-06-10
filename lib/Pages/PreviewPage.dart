@@ -4,6 +4,8 @@ import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
 import 'package:pr_mbls/Styles/Constants.dart';
 import 'dart:io';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+
 
 import '../Models/Media.dart';
 import '../Models/Post.dart';
@@ -112,7 +114,7 @@ class _PreviewPageState extends State<PreviewPage> {
     );
   }
 
-
+/*
   Widget songSearch() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
@@ -144,6 +146,59 @@ class _PreviewPageState extends State<PreviewPage> {
       ),
     );
   }
+
+ */
+
+  Widget songSearch() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+      child: TypeAheadField(
+        textFieldConfiguration: TextFieldConfiguration(
+          style: const TextStyle(color: Colors.black),
+          onChanged: (value) {
+            setState(() {
+              searchQuery = value;
+            });
+          },
+          onSubmitted: (value) {
+            _performSearch(value);
+          },
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            hintText: "Search",
+            hintStyle: const TextStyle(color: Colors.black45),
+            filled: true,
+            fillColor: Colors.white,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                _performSearch(searchQuery);
+              },
+            ),
+          ),
+        ),
+        suggestionsCallback: (pattern) async {
+          // Implement your song search logic here, returning a list of suggestions
+          return await APIManager().search(pattern);
+        },
+        itemBuilder: (context, suggestion) {
+          // Customize the appearance of each suggestion item in the dropdown
+          return ListTile(
+            title: Text(suggestion.name),
+          );
+        },
+        onSuggestionSelected: (suggestion) {
+          // Handle the selection of a suggestion from the dropdown
+          APIManager().search(suggestion.name);
+        },
+      ),
+    );
+  }
+
+
+
 
   Widget search() {
     return TextButton(
