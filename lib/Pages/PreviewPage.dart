@@ -27,11 +27,8 @@ class _PreviewPageState extends State<PreviewPage> {
   String searchQuery = '';
   bool showSongDescription = false;
   Media? media;
-  String? selectedOption;
-
 
   void _performSearch(String query) async {
-    APIManager().onChangeType(selectedOption!);
     List<Media> searchResults = await APIManager().search(query);
     if (searchResults.isNotEmpty) {
       setState(() {
@@ -91,7 +88,6 @@ class _PreviewPageState extends State<PreviewPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
       child: DropdownButtonFormField<String>(
-        value: selectedOption,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -99,7 +95,7 @@ class _PreviewPageState extends State<PreviewPage> {
         ),
         onChanged: (value) {
           setState(() {
-            selectedOption = value;
+            APIManager().onChangeType(value!);
           });
         },
         items: const [
