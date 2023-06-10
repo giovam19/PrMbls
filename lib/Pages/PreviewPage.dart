@@ -213,9 +213,10 @@ class _PreviewPageState extends State<PreviewPage> {
                 children: <Widget>[
                   Text(
                     media.artist,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
+                      color: Color(Constants.lighgray),
                     ),
                     overflow: TextOverflow.ellipsis, // Add this line
                     maxLines: 1, // Add this line
@@ -223,8 +224,9 @@ class _PreviewPageState extends State<PreviewPage> {
                   const SizedBox(height: 8.0),
                   Text(
                     media.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14.0,
+                      color: Color(Constants.lighgray),
                     ),
                     overflow: TextOverflow.ellipsis, // Add this line
                     maxLines: 1, // Add this line
