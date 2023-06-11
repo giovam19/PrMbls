@@ -8,13 +8,32 @@ class DataManager {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
 
-  Future<List<Post>> getPosts() async {
+  Future<List<Post>> getPosts(String username) async {
     List<Post> posts = [];
     QuerySnapshot snapshot = await db.collection("Posts").get();
 
     for (var p in snapshot.docs) {
       var ob = p.data() as Map<String, dynamic>;
-      posts.add(Post.cast(ob));
+      Post data = Post.cast(ob);
+      if (data.username != username) {
+        posts.add(data);
+      }
+    }
+
+    posts.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    return posts;
+  }
+
+  Future<List<Post>> getMyPosts(String username) async {
+    List<Post> posts = [];
+    QuerySnapshot snapshot = await db.collection("Posts").get();
+
+    for (var p in snapshot.docs) {
+      var ob = p.data() as Map<String, dynamic>;
+      Post data = Post.cast(ob);
+      if (data.username == username) {
+        posts.add(data);
+      }
     }
 
     posts.sort((a, b) => b.timestamp.compareTo(a.timestamp));

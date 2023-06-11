@@ -23,29 +23,44 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(Constants.mediumblue),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            LoginUser.instance.onlineImage != null ?
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-              child: Image.network(LoginUser.instance.onlineImage!, height: 280),
-            ) :
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-              child: Image.network("https://ideastest.org.uk/wp-content/uploads/2019/04/default-avatar-1.jpg", height: 280),
-            ),
-            texts.userName(LoginUser.instance.username!),
-            Expanded(
-              flex: MediaQuery.of(context).size.height.round(),
-              child: grid.profileGrid(),
-            ),
-          ]
+        backgroundColor: Color(Constants.mediumblue),
+        body: FutureBuilder(
+          future: data.getMyPosts(LoginUser.instance.username!),
+          builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return body(context, snapshot.data!);
+            } else {
+              return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator(color: Color(Constants.lighgray))]));
+            }
+          },
         )
-      ),
     );
   }
 
+  Widget body(BuildContext context, List<Post> data) {
+    return Scaffold(
+      backgroundColor: Color(Constants.mediumblue),
+      body: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                LoginUser.instance.onlineImage != "" ?
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+                  child: Image.network(LoginUser.instance.onlineImage!, height: 280),
+                ) :
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+                  child: Image.network("https://ideastest.org.uk/wp-content/uploads/2019/04/default-avatar-1.jpg", height: 280),
+                ),
+                texts.userName(LoginUser.instance.username!),
+                Expanded(
+                  flex: MediaQuery.of(context).size.height.round(),
+                  child: grid.profileGrid(data),
+                ),
+              ]
+          )
+      ),
+    );
+  }
 }

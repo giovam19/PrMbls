@@ -212,7 +212,7 @@ class _PreviewPageState extends State<PreviewPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    media.artist,
+                    media.name,
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
@@ -223,7 +223,7 @@ class _PreviewPageState extends State<PreviewPage> {
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    media.name,
+                    media.artist,
                     style: TextStyle(
                       fontSize: 14.0,
                       color: Color(Constants.lighgray),
@@ -252,11 +252,16 @@ class _PreviewPageState extends State<PreviewPage> {
           media?.artist ?? '', // Assuming media is the current selected media object
           media?.image ?? '', // Assuming media is the current selected media object
           DateTime.now(),
+          media?.extraInfo ?? '',
+          media?.type ?? '',
+          media?.year ?? ''
         );
         DataManager().addPost(post);
-        final nav = Navigator.of(context);
-        nav.pop();
-        nav.pop();
+
+        int count = 0;
+        Navigator.popUntil(context, (route) {
+          return count++ == 2;
+        });
       },
       child: Container(
         decoration: BoxDecoration(

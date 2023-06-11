@@ -7,6 +7,7 @@ import 'package:pr_mbls/GlobalWidgets/CustomLists.dart';
 import 'package:http/http.dart' as http;
 import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
+import 'package:pr_mbls/Models/LoginUser.dart';
 import 'package:pr_mbls/Models/Media.dart';
 import 'package:pr_mbls/Models/Post.dart';
 import '../GlobalWidgets/CustomTexts.dart';
@@ -22,9 +23,7 @@ class _MainPageState extends State<MainPage> {
   CustomTexts texts = CustomTexts();
 
   CustomLists lists = CustomLists();
-
   CustomButtons buttons = CustomButtons();
-
   DataManager data = DataManager();
 
   List<Post> posts = [];
@@ -36,9 +35,9 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: Color(Constants.mediumblue),
       body: RefreshIndicator(
-        onRefresh: () => data.getPosts(), // Specify the function to call when refreshing
+        onRefresh: () => data.getPosts(LoginUser.instance.username!), // Specify the function to call when refreshing
         child: FutureBuilder(
-          future: data.getPosts(),
+          future: data.getPosts(LoginUser.instance.username!),
           builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               posts = snapshot.data!; // Assign the fetched posts to the posts variable
@@ -77,7 +76,7 @@ class _MainPageState extends State<MainPage> {
             flex: MediaQuery.of(context).size.height.round(),
             child: RefreshIndicator(
               onRefresh: () async {
-                List<Post> refreshedPosts = await data.getPosts(); // Fetch new posts
+                List<Post> refreshedPosts = await data.getPosts(LoginUser.instance.username!); // Fetch new posts
                 setState(() {
                   posts = refreshedPosts; // Update the posts variable
                 });

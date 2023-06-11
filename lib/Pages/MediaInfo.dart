@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pr_mbls/GlobalWidgets/CustomTexts.dart';
 import 'package:pr_mbls/Managers/APIManager.dart';
+import 'package:intl/intl.dart';
 
 import '../Models/Post.dart';
 import '../Styles/Constants.dart';
@@ -33,9 +34,13 @@ class MediaInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     texts.nameMedia("${post.titlemedia}"),
-                    texts.extraMedia("Artist: ${post.artistmedia}"),
-                    texts.extraMedia("Published: ${post.timestamp}"),
-                    texts.extraMedia("Album: hola"),
+                    post.type == "Music" ?
+                    texts.extraMedia("Artist: ${post.artistmedia}") :
+                    texts.extraMedia("Director: ${post.artistmedia}"),
+                    texts.extraMedia("Published: ${DateFormat('yyyy').format(post.timestamp)}"),
+                    post.type == "Music" ?
+                    texts.extraMedia("Album: ${post.extraInfo}") :
+                    texts.extraMedia("Genre: ${post.extraInfo}")
                   ],
                 ),
               ),

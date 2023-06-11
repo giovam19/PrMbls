@@ -8,9 +8,12 @@ class Post {
   late String artistmedia;
   late String imagemedia;
   late DateTime timestamp;
+  late String extraInfo;
+  late String type;
+  late String yearmedia;
 
-  Post(this.username, this.userprofile, this.postmedia, this.titlemedia,
-      this.artistmedia, this.imagemedia, this.timestamp);
+  Post(this.username, this.userprofile, this.postmedia, this.titlemedia, this.artistmedia,
+      this.imagemedia, this.timestamp, this.extraInfo, this.type, this.yearmedia);
 
   Post.cast(Map<String, dynamic> map) {
     username = map['username'];
@@ -19,6 +22,9 @@ class Post {
     titlemedia = map['titlemedia'];
     artistmedia = map['artistmedia'];
     imagemedia = map['imagemedia'];
+    extraInfo = map['extraInfo'];
+    type = map['type'];
+    yearmedia = map['yearmedia'];
 
     var micro = map['timestamp'] as Timestamp;
     timestamp = DateTime.fromMicrosecondsSinceEpoch(micro.microsecondsSinceEpoch);
@@ -41,6 +47,9 @@ class Post {
       "titlemedia": titlemedia,
       "artistmedia": artistmedia,
       "imagemedia": imagemedia,
+      "extraInfo": extraInfo,
+      "type": type,
+      "yearmedia": yearmedia,
       "timestamp": Timestamp.fromDate(timestamp)
     };
   }

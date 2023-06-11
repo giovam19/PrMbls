@@ -5,6 +5,7 @@ import 'package:pr_mbls/Pages/MediaInfo.dart';
 import 'Pages/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Pages/Profile.dart';
 import 'Pages/Register.dart';
 import 'Styles/Constants.dart';
 
@@ -24,9 +25,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "RealVibes",
-      home: Scaffold(
-        body: Login(),
-      ),
+      home: Login(),
+      routes: {
+        '/main': (context) => MainPage(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

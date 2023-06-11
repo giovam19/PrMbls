@@ -14,8 +14,7 @@ class _NewPublishState extends State<NewPublish> {
 
   Future initCamera(CameraDescription cameraDescription) async {
   // create a CameraController
-    _cameraController = CameraController(
-        cameraDescription, ResolutionPreset.high);
+    _cameraController = CameraController(cameraDescription, ResolutionPreset.high);
 
   // Next, initialize the controller. This returns a Future.
     try {
