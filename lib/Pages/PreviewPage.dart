@@ -1,7 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
-import 'package:marquee_text/marquee_text.dart';
 import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
 import 'package:pr_mbls/Models/LoginUser.dart';
@@ -9,6 +7,8 @@ import 'package:pr_mbls/Pages/MainPage.dart';
 import 'package:pr_mbls/Styles/Constants.dart';
 import 'dart:io';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:flutter/widgets.dart';
+import 'package:marquee/marquee.dart';
 
 
 import '../Models/Media.dart';
@@ -193,7 +193,7 @@ class _PreviewPageState extends State<PreviewPage> {
   Widget songDescription(Media media) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
-        child: Row(
+      child: Row(
         children: <Widget>[
           Container(
             width: 100.0,
@@ -201,13 +201,15 @@ class _PreviewPageState extends State<PreviewPage> {
             // color: Colors.blue, // Uncomment this line if you want a background color for the container
             alignment: Alignment.center,
             child: Image(
-                image: Image.network(media.image).image,
-                height: 100,
-                width: 100
+              image: Image.network(media.image).image,
+              height: 100,
+              width: 100,
             ),
           ),
           const SizedBox(width: 16.0),
-          SingleChildScrollView(
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -218,8 +220,8 @@ class _PreviewPageState extends State<PreviewPage> {
                       fontWeight: FontWeight.bold,
                       color: Color(Constants.lighgray),
                     ),
-                    overflow: TextOverflow.ellipsis, // Add this line
-                    maxLines: 1, // Add this line
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                   const SizedBox(height: 8.0),
                   Text(
@@ -228,11 +230,12 @@ class _PreviewPageState extends State<PreviewPage> {
                       fontSize: 14.0,
                       color: Color(Constants.lighgray),
                     ),
-                    overflow: TextOverflow.ellipsis, // Add this line
-                    maxLines: 1, // Add this line
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ],
               ),
+            ),
           ),
         ],
       ),
@@ -240,10 +243,12 @@ class _PreviewPageState extends State<PreviewPage> {
   }
 
 
+
+
+
   Widget postVideo() {
     return TextButton(
       onPressed: () {
-        //TODO: LLAMAR A LA FUNCION QUE SUBE LA FOTO Y TE DEVUELVE LA ULR O ALGO ASI
         Post post = Post(
           LoginUser.instance.username!, // Replace with the actual username
           LoginUser.instance.onlineImage!, // Replace with the actual user profile
