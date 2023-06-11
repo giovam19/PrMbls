@@ -12,30 +12,55 @@ import 'package:pr_mbls/Models/Post.dart';
 import '../GlobalWidgets/CustomTexts.dart';
 import '../Styles/Constants.dart';
 
-class MainPage extends StatelessWidget {
+
+class MainPage extends StatefulWidget {
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   CustomTexts texts = CustomTexts();
+
   CustomLists lists = CustomLists();
+
   CustomButtons buttons = CustomButtons();
+
   DataManager data = DataManager();
 
+  List<Post> posts = [];
+
+
+ // Declare a variable to store fetched posts
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(Constants.mediumblue),
-      body: FutureBuilder(
-        future: data.getPosts(),
-        builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return body(context, snapshot.data!);
-          } else {
-            return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator(color: Color(Constants.lighgray))]));
-          }
-        },
-      )
+      body: RefreshIndicator(
+        onRefresh: () => data.getPosts(), // Specify the function to call when refreshing
+        child: FutureBuilder(
+          future: data.getPosts(),
+          builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              posts = snapshot.data!; // Assign the fetched posts to the posts variable
+              return body(context);
+            } else {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(color: Color(Constants.lighgray)),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+
+      ),
     );
   }
 
-  Widget body(BuildContext context, List<Post> data) {
+  Widget body(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -50,20 +75,24 @@ class MainPage extends StatelessWidget {
           ),
           Expanded(
             flex: MediaQuery.of(context).size.height.round(),
-            child: lists.mainList(data),
+            child: RefreshIndicator(
+              onRefresh: () async {
+                List<Post> refreshedPosts = await data.getPosts(); // Fetch new posts
+                setState(() {
+                  posts = refreshedPosts; // Update the posts variable
+                });
+              },
+              child: lists.mainList(posts), // Use the updated posts variable
+            ),
           ),
           Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //buttons.profileButton(context),
-              //Spacer(),
               buttons.addPublishButton(context),
-              //Spacer(),
-              //buttons.settingsButton(context),
             ],
           ),
-        ]
+        ],
       ),
     );
   }
