@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pr_mbls/Managers/AuthManager.dart';
 import 'package:pr_mbls/Pages/MainPage.dart';
-import 'package:pr_mbls/Pages/MediaInfo.dart';
+import 'package:pr_mbls/Pages/Settings.dart';
 import 'Pages/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -15,19 +16,23 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-  runApp(const MyApp());
+  bool isLogged = await AuthManager.isLogged();
+
+  runApp(MyApp(isLogged));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  late bool isLogged;
+
+  MyApp(this.isLogged, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "RealVibes",
-      home: Login(),
+      home: isLogged ? MainPage() : Login(),
       routes: {
-        '/main': (context) => MainPage(),
+        '/login': (context) => Login(),
       },
       debugShowCheckedModeBanner: false,
     );

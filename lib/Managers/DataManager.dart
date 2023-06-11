@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:pr_mbls/Models/LoginUser.dart';
 import '../Models/Post.dart';
@@ -78,5 +79,32 @@ class DataManager {
     }
 
     return url;
+  }
+
+  Future<bool> changeUsername(String username) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await user.updateDisplayName(username);
+      changePostsUser(username);
+
+      return true;
+    }
+
+    return false;
+  }
+  
+  Future<void> changePostsUser(String username) async {
+    QuerySnapshot snapshot = await db.collection("Posts").get();
+
+    for (var p in snapshot.docs) {
+      var ob = p.data() as Map<String, dynamic>;
+      if (ob['username'] == LoginUser.instance.username) {
+        p.reference.update({
+          'username': username
+        });
+      }
+    }
+
+    LoginUser.instance.username = username;
   }
 }

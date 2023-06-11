@@ -11,12 +11,16 @@ import 'package:pr_mbls/Models/LoginUser.dart';
 import 'package:pr_mbls/Pages/CameraPage.dart';
 import 'package:pr_mbls/Pages/Profile.dart';
 import 'package:pr_mbls/Pages/Register.dart';
+import 'package:pr_mbls/Pages/Settings.dart';
 import 'package:pr_mbls/Styles/Constants.dart';
 import '../GlobalWidgets/CustomTextFields.dart';
+import '../Pages/Login.dart';
 import '../Pages/MainPage.dart';
 import '../Pages/NewPublish.dart';
 
 class CustomButtons {
+  DataManager dataManager = DataManager();
+
   /*----------------------------------- Buttons ----------------------------------------------*/
   Widget loginButton(CustomTextFields fields, BuildContext context) {
     return TextButton(
@@ -91,7 +95,7 @@ class CustomButtons {
 
   Widget profileButton(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(6, 50, 6, 0),
+      padding: EdgeInsets.all(6),
       child: TextButton(
         onPressed: () => goToProfile(context),
         child: Icon(Icons.person, size: 40, color: Color(Constants.lighgray)),
@@ -104,7 +108,7 @@ class CustomButtons {
       padding: EdgeInsets.all(6),
       child: TextButton(
         onPressed: () => goToNewPublish(context),
-        child: Icon(Icons.add_circle_outline, size: 50, color: Color(Constants.lighgray)),
+        child: Icon(Icons.add_circle_outline, size: 40, color: Color(Constants.lighgray)),
       ),
     );
   }
@@ -115,6 +119,46 @@ class CustomButtons {
       child: TextButton(
         onPressed: () => goToSettings(context),
         child: Icon(Icons.settings, size: 40, color: Color(Constants.lighgray)),
+      ),
+    );
+  }
+
+  Widget changeUsernameButton(CustomTextFields fields, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+      child: TextButton(
+          onPressed: () => changeUsername(fields),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Color(Constants.lightblue).withOpacity(0.81),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            child: Text(
+              "Change Username",
+              style: TextStyle(color: Color(Constants.lighgray), fontSize: 20),
+            ),
+          )
+      ),
+    );
+  }
+
+  Widget signOffButton(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 84, 0, 0),
+      child: TextButton(
+          onPressed: () => signOff(context),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Color(Constants.lightblue).withOpacity(0.81),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              "Sign Off",
+              style: TextStyle(color: Color(Constants.lighgray), fontSize: 20),
+            ),
+          )
       ),
     );
   }
@@ -173,18 +217,37 @@ class CustomButtons {
   }
 
   Future<void> goToNewPublish(BuildContext context) async {
-    Fluttertoast.showToast(msg: "New Publish", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
     await availableCameras()
         .then((value) => Navigator.push(context, MaterialPageRoute(builder: (_) => CameraPage(cameras: value))));
 
   }
 
   void goToSettings(BuildContext context) {
-    Fluttertoast.showToast(msg: "Settings", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
   }
 
   void returnPage(BuildContext context) {
     Navigator.pop(context);
   }
 
+  Future<void> changeUsername(CustomTextFields fields) async {
+    String user = fields.userText;
+    bool res = await dataManager.changeUsername(user);
+
+    if (res) {
+      fields.userNameController = "";
+      Fluttertoast.showToast(msg: "Username updated!", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    } else {
+      Fluttertoast.showToast(msg: "Error updating", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
+    }
+  }
+
+  void signOff(BuildContext context) {
+    AuthManager.signOff();
+    /*int count = 0;
+    Navigator.popUntil(context, (route) {
+      return count++ == 2;
+    });*/
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login()), (route) => false);
+  }
 }

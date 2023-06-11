@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pr_mbls/Pages/Login.dart';
 import '../Models/FirebaseUser.dart';
 import '../Models/LoginUser.dart';
@@ -45,7 +48,19 @@ class AuthManager {
     return null;
   }
 
+  static Future<bool> isLogged() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
 
+    if (preferences.getString("email") == null) {
+      return false;
+    }
+
+    LoginUser.instance.email = preferences.getString("email");
+    LoginUser.instance.username = preferences.getString("username");
+    LoginUser.instance.onlineImage = preferences.getString("onlineImage");
+
+    return true;
+  }
 
 
   static Future<User?> signInUsingEmailPassword({required String email, required String password}) async {
@@ -60,6 +75,11 @@ class AuthManager {
       LoginUser.instance.username = user?.displayName;
       LoginUser.instance.onlineImage = await dataManager.getProfilePhoto(user!.displayName!);
 
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("email", LoginUser.instance.email!);
+      preferences.setString("username", LoginUser.instance.username!);
+      preferences.setString("onlineImage", LoginUser.instance.onlineImage!);
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Fluttertoast.showToast(msg: "No user found for that email.", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP);
@@ -69,5 +89,13 @@ class AuthManager {
     }
 
     return user;
+  }
+
+  static Future<void> signOff() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    preferences.remove("email");
+    preferences.remove("username");
+    preferences.remove("onlineImage");
   }
 }

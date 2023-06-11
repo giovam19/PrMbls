@@ -274,7 +274,7 @@ class _PreviewPageState extends State<PreviewPage> {
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 45),
         child: const Text(
-          "Post Video",
+          "Post",
           style: TextStyle(color: Colors.black, fontSize: 16),
         ),
       ),

@@ -14,28 +14,30 @@ class Register extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(Constants.mediumblue),
-      resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                buttons.backButton(context)
-              ],
-            ),
-            texts.BigAppName(20),
-            textFields.userNameField(),
-            textFields.emailField(),
-            textFields.passField(),
-            if (LoginUser.instance.image != null)
-              Image(
-                  image: Image.file(LoginUser.instance.image!).image, height: 180, width: 180
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  buttons.backButton(context)
+                ],
               ),
-            buttons.addPhoto(context),
-            buttons.registerButton(textFields, context),
-          ],
+              texts.BigAppName(20),
+              textFields.userNameField(),
+              textFields.emailField(),
+              textFields.passField(),
+              if (LoginUser.instance.image != null)
+                Image(
+                    image: Image.file(LoginUser.instance.image!).image, height: 180, width: 180
+                ),
+              buttons.addPhoto(context),
+              buttons.registerButton(textFields, context),
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,30 +33,35 @@ class _MainPageState extends State<MainPage> {
  // Declare a variable to store fetched posts
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(Constants.mediumblue),
-      body: RefreshIndicator(
-        onRefresh: () => data.getPosts(LoginUser.instance.username!), // Specify the function to call when refreshing
-        child: FutureBuilder(
-          future: data.getPosts(LoginUser.instance.username!),
-          builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              posts = snapshot.data!; // Assign the fetched posts to the posts variable
-              return body(context);
-            } else {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(color: Color(Constants.lighgray)),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
+    return WillPopScope(
+        child: Scaffold(
+          backgroundColor: Color(Constants.mediumblue),
+          body: RefreshIndicator(
+            onRefresh: () => data.getPosts(LoginUser.instance.username!), // Specify the function to call when refreshing
+            child: FutureBuilder(
+              future: data.getPosts(LoginUser.instance.username!),
+              builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  posts = snapshot.data!; // Assign the fetched posts to the posts variable
+                  return body(context);
+                } else {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: Color(Constants.lighgray)),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
 
-      ),
+          ),
+        ),
+        onWillPop: () async {
+          exit(0);
+        }
     );
   }
 
@@ -68,8 +74,6 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               texts.MediumAppName(50, 24),
-              Spacer(),
-              buttons.profileButton(context),
             ],
           ),
           Expanded(
@@ -88,7 +92,11 @@ class _MainPageState extends State<MainPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              buttons.profileButton(context),
+              Spacer(),
               buttons.addPublishButton(context),
+              Spacer(),
+              buttons.settingsButton(context),
             ],
           ),
         ],

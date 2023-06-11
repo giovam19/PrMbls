@@ -4,4 +4,5 @@ class Constants {
   static int lightblue = 0xFFB4CDED;
   static int lighgray = 0xFFF0F4EF;
   static int green = 0xFFA9D2D5;
+  static int red = 0xFFCD0000;
 }
