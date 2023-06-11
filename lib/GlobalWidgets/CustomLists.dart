@@ -47,7 +47,7 @@ class CustomLists {
           ),
 
           data.elementAt(index).postmedia != "" ?
-          Image(image: Image.network(data.elementAt(index).postmedia).image, height: 400) :
+          Image(image: Image.network(data.elementAt(index).postmedia).image) :
           Image(image: Image.asset("assets/img/defaultPost.jpg").image),
 
           Container(

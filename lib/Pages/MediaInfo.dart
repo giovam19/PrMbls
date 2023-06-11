@@ -37,7 +37,7 @@ class MediaInfo extends StatelessWidget {
                     post.type == "Music" ?
                     texts.extraMedia("Artist: ${post.artistmedia}") :
                     texts.extraMedia("Director: ${post.artistmedia}"),
-                    texts.extraMedia("Published: ${DateFormat('yyyy').format(post.timestamp)}"),
+                    texts.extraMedia("Published: ${post.yearmedia}"),
                     post.type == "Music" ?
                     texts.extraMedia("Album: ${post.extraInfo}") :
                     texts.extraMedia("Genre: ${post.extraInfo}")
