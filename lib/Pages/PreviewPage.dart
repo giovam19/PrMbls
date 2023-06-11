@@ -8,7 +8,6 @@ import 'package:pr_mbls/Styles/Constants.dart';
 import 'dart:io';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter/widgets.dart';
-import 'package:marquee/marquee.dart';
 
 
 import '../Models/Media.dart';

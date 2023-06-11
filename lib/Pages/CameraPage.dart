@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'PreviewPage.dart';
+
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key, required this.cameras}) : super(key: key);
@@ -51,18 +54,18 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
-  Future initCamera(CameraDescription cameraDescription) async {
-    _cameraController =
-        CameraController(cameraDescription, ResolutionPreset.high);
+  Future<void> initCamera(CameraDescription cameraDescription) async {
+    _cameraController = CameraController(cameraDescription, ResolutionPreset.medium);
     try {
       await _cameraController.initialize().then((_) {
         if (!mounted) return;
         setState(() {});
       });
     } on CameraException catch (e) {
-      debugPrint("camera error $e");
+      debugPrint('Camera error: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
