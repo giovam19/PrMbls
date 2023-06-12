@@ -1,15 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pr_mbls/GlobalWidgets/CustomButtons.dart';
 import 'package:pr_mbls/GlobalWidgets/CustomGrid.dart';
-import 'package:pr_mbls/GlobalWidgets/CustomLists.dart';
-import 'package:http/http.dart' as http;
-import 'package:pr_mbls/Managers/APIManager.dart';
 import 'package:pr_mbls/Managers/DataManager.dart';
 import 'package:pr_mbls/Models/LoginUser.dart';
-import 'package:pr_mbls/Models/Media.dart';
 import 'package:pr_mbls/Models/Post.dart';
 import '../GlobalWidgets/CustomTexts.dart';
 import '../Styles/Constants.dart';
@@ -30,7 +24,8 @@ class Profile extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               return body(context, snapshot.data!);
             } else {
-              return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator(color: Color(Constants.lighgray))]));
+              return Center(
+                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator(color: Color(Constants.lighgray))]));
             }
           },
         )

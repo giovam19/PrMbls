@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../Models/Post.dart';
+import '../Pages/PostDetailsPage.dart';
 
 class CustomGrid {
   Widget profileGrid(List<Post> data) {
@@ -15,10 +15,22 @@ class CustomGrid {
           child: Center(
             child: data.elementAt(index).postmedia == "" ?
             Image.asset("assets/img/defaultPost.jpg") :
-            Image.network(data.elementAt(index).postmedia)
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostDetailsPage(post: data.elementAt(index)),
+                  ),
+                );
+              },
+              child: Image.network(data.elementAt(index).postmedia),
+            ),
+
           ),
         );
       },
     );
   }
 }
+

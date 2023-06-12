@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Media {
   String name;
   String artist;

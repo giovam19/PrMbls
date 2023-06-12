@@ -3,7 +3,6 @@ import 'package:pr_mbls/GlobalWidgets/CustomTexts.dart';
 import 'package:pr_mbls/Models/Post.dart';
 import 'package:pr_mbls/Pages/MediaInfo.dart';
 
-import '../Models/Media.dart';
 import '../Styles/Constants.dart';
 
 class CustomLists {

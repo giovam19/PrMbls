@@ -27,32 +27,23 @@ class _PreviewPageState extends State<PreviewPage> {
   String searchQuery = '';
   bool showSongDescription = false;
   Media? media;
+  bool selectedContentType = false;
+
 
   void _performSearch(String query) async {
-    List<Media> searchResults = await APIManager().search(query);
-    if (searchResults.isNotEmpty) {
-      setState(() {
-        media = searchResults.first;
-        showSongDescription = true;
-      });
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('No Results'),
-            content: const Text('No search results found.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+    if (query.isNotEmpty) {
+      List<Media> searchResults = await APIManager().search(query);
+      if (searchResults.isNotEmpty) {
+        setState(() {
+          media = searchResults.first;
+          showSongDescription = true;
+        });
+      } else {
+        setState(() {
+          media = null;
+          showSongDescription = false;
+        });
+      }
     }
   }
 
@@ -64,12 +55,12 @@ class _PreviewPageState extends State<PreviewPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          margin: const EdgeInsets.only(top: 50), // Set the desired margin value
+          margin: const EdgeInsets.only(top: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              musicSearch(),
+              selectContent(),
               songSearch(),
               Visibility(
                 visible: showSongDescription && media != null,
@@ -84,22 +75,23 @@ class _PreviewPageState extends State<PreviewPage> {
     );
   }
 
-  Widget musicSearch() {
+  Widget selectContent() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Color(Constants.lighgray), // Add your desired background color here
+          color: Color(Constants.lighgray),
         ),
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(
-            border: InputBorder.none, // Remove the border
-            contentPadding: EdgeInsets.symmetric(horizontal: 16), // Adjust the content padding
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(horizontal: 16),
           ),
           onChanged: (value) {
             setState(() {
               APIManager().onChangeType(value!);
+              selectedContentType = true;
             });
           },
           items: const [
@@ -112,7 +104,7 @@ class _PreviewPageState extends State<PreviewPage> {
               child: Text('Movie'),
             ),
           ],
-          hint: const Text('Select a field'), // Add a hint text
+          hint: const Text('Select a field'),
         ),
       ),
     );
@@ -127,12 +119,16 @@ class _PreviewPageState extends State<PreviewPage> {
         textFieldConfiguration: TextFieldConfiguration(
           style: const TextStyle(color: Colors.black),
           onChanged: (value) {
-            setState(() {
-              searchQuery = value;
-            });
+            if (value.isNotEmpty) {
+              setState(() {
+                searchQuery = value;
+              });
+            }
           },
           onSubmitted: (value) {
-            _performSearch(value);
+            if (value.isNotEmpty && selectedContentType == true) {
+              _performSearch(value);
+            }
           },
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -141,27 +137,51 @@ class _PreviewPageState extends State<PreviewPage> {
             hintText: "Search",
             hintStyle: const TextStyle(color: Colors.black45),
             filled: true,
-            fillColor: Color(Constants.lighgray), // Add your desired background color here
+            fillColor: Color(Constants.lighgray),
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                _performSearch(searchQuery);
+                if (searchQuery.isNotEmpty && selectedContentType == true) {
+                  _performSearch(searchQuery);
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('No Value Provided'),
+                      content: Text('Please enter a search query and select a content type.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
             ),
           ),
         ),
         suggestionsCallback: (pattern) async {
-          // Implement your song search logic here, returning a list of suggestions
+          if (pattern.isEmpty) {
+            return <dynamic>[];
+          }
           return await APIManager().search(pattern);
         },
+
         itemBuilder: (context, suggestion) {
-          // Customize the appearance of each suggestion item in the dropdown
-          return ListTile(
-            title: Text(suggestion.name),
-          );
+          if (suggestion.name != null && suggestion.name.isNotEmpty) {
+            return ListTile(
+              title: Text(suggestion.name),
+            );
+          } else {
+            // Return an empty container or any other widget when the suggestion value is empty or an empty string.
+            return Container();
+          }
         },
         onSuggestionSelected: (suggestion) {
-          // Handle the selection of a suggestion from the dropdown
           searchQuery = suggestion.name;
           _performSearch(searchQuery);
         },
@@ -173,8 +193,10 @@ class _PreviewPageState extends State<PreviewPage> {
   Widget search() {
     return TextButton(
         onPressed: () {
-          _performSearch(searchQuery);
-          },
+          if (searchQuery.isNotEmpty) {
+            _performSearch(searchQuery);
+          }
+        },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -197,7 +219,6 @@ class _PreviewPageState extends State<PreviewPage> {
           Container(
             width: 100.0,
             height: 100.0,
-            // color: Colors.blue, // Uncomment this line if you want a background color for the container
             alignment: Alignment.center,
             child: Image(
               image: Image.network(media.image).image,
@@ -249,19 +270,18 @@ class _PreviewPageState extends State<PreviewPage> {
     return TextButton(
       onPressed: () {
         Post post = Post(
-          LoginUser.instance.username!, // Replace with the actual username
-          LoginUser.instance.onlineImage!, // Replace with the actual user profile
-          widget.picture.path, // Assuming the video path is used as the post media
-          media?.name ?? '', // Assuming media is the current selected media object
-          media?.artist ?? '', // Assuming media is the current selected media object
-          media?.image ?? '', // Assuming media is the current selected media object
+          LoginUser.instance.username!,
+          LoginUser.instance.onlineImage!,
+          widget.picture.path,
+          media?.name ?? '',
+          media?.artist ?? '',
+          media?.image ?? '',
           DateTime.now(),
           media?.extraInfo ?? '',
           media?.type ?? '',
           media?.year ?? ''
         );
         DataManager().addPost(post);
-
         int count = 0;
         Navigator.popUntil(context, (route) {
           return count++ == 2;
@@ -270,7 +290,7 @@ class _PreviewPageState extends State<PreviewPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Color(Constants.lightblue), // Add your desired background color here
+          color: Color(Constants.lightblue),
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 45),
         child: const Text(
@@ -286,7 +306,7 @@ class _PreviewPageState extends State<PreviewPage> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 135),
       child: Center(
-        child: Image.file(File(widget.picture.path)), // Display the image
+        child: Image.file(File(widget.picture.path)),
       ),
     );
   }
